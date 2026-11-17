@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI TRAINING | AI Research & Onboarding Portal</title>
+  
+  <!-- Fonts: Playfair Display / Serif for Editorial Headline look + Inter/Plus Jakarta Sans for clean reading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Three.js for Modern 3D Canvas Effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --bg-editorial: #fbfbfd;
+      --bg-surface: #ffffff;
+      --brand-red: #8b0000;
+      --brand-dark-red: #6e0000;
+      --text-headline: #111111;
+      --text-body: #2c3038;
+      --text-muted: #666c77;
+      --border-light: #e5e7eb;
+      --border-subtle: #f0f2f5;
+      --accent-badge: #1f2937;
+      --font-serif: 'Lora', Georgia, serif;
+      --font-display: 'Cinzel', serif;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-editorial);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Top Sub-Bar & Announcement */
+    .top-edition-bar {
+      border-bottom: 1px solid var(--border-light);
+      background: #ffffff;
+      padding: 6px 4%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+    }
+    .edition-info span {
+      margin-right: 18px;
+    }
+    .edition-info strong {
+      color: var(--text-headline);
+    }
+
+    /* Main Editorial Masthead Navigation Header */
+    header.masthead {
+      background: #ffffff;
+      border-bottom: 2px solid #111111;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .masthead-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 14px 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .masthead-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hamburger-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #111;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .hamburger-btn:hover {
+      background: #f1f3f5;
+    }
+
+    .brand-logo-text {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #111;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-tagline-small {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--brand-red);
+      font-weight: 700;
+      border-left: 1px solid #ccc;
+      padding-left: 10px;
+      margin-left: 4px;
+      display: inline-block;
+    }
+
+    .masthead-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .search-btn-trigger {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: #111;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    .search-btn-trigger:hover {
+      background: #f1f3f5;
+    }
+
+    .btn-red-pill {
+      background: var(--brand-red);
+      color: #ffffff;
+      padding: 8px 22px;
+      border-radius: 24px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: background 0.2s ease, transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-red-pill:hover {
+      background: var(--brand-dark-red);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline-pill {
+      border: 1px solid #111;
+      background: transparent;
+      color: #111;
+      padding: 7px 18px;
+      border-radius: 24px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-outline-pill:hover {
+      background: #111;
+      color: #fff;
+    }
+
+    /* Fortune-Style Slide-Out Drawer Navigation */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 380px;
+      max-width: 88vw;
+      height: 100vh;
+      background: #ffffff;
+      z-index: 2001;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 10px 0 35px rgba(0,0,0,0.25);
+    }
+    .drawer-overlay.open .side-drawer {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .drawer-header .drawer-brand {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #111;
+    }
+    .drawer-close {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .drawer-menu-list {
+      list-style: none;
+      padding: 16px 0;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .drawer-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      color: #111;
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+    }
+    .drawer-item a:hover {
+      background: #f8fafc;
+      color: var(--brand-red);
+      padding-left: 32px;
+    }
+    .drawer-item a i.arrow {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    .drawer-footer {
+      padding: 22px 28px;
+      background: #f8fafc;
+      border-top: 1px solid var(--border-light);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Sub-Navigation Categories Bar */
+    .subnav-bar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-light);
+      padding: 0 4%;
+      display: flex;
+      gap: 26px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .subnav-bar::-webkit-scrollbar { display: none; }
+    .subnav-link {
+      padding: 12px 0;
+      color: #374151;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .subnav-link:hover, .subnav-link.active {
+      color: var(--brand-red);
+    }
+    .subnav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--brand-red);
+    }
+
+    /* Main Content Container */
+    main.editorial-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 30px 4% 80px;
+    }
+
+    /* Featured Lead Story (Fortune Magazine Hero Section) */
+    .hero-lead-section {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      margin-bottom: 50px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    @media (max-width: 1024px) {
+      .hero-lead-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lead-story {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .kicker-tag {
+      font-family: var(--font-sans);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      font-weight: 800;
+      color: var(--brand-red);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .main-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text-headline);
+      margin-bottom: 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .lead-dek {
+      font-family: var(--font-sans);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 22px;
+    }
+
+    .byline-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.84rem;
+      color: #6b7280;
+      border-top: 1px solid var(--border-light);
+      padding-top: 14px;
+    }
+    .byline-row strong {
+      color: #111;
+    }
+
+    /* 3D Interactive Visual in Magazine Card Container */
+    .hero-visual-card {
+      background: #0f1523;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      height: 440px;
+    }
+
+    .card-top-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      color: #00f0ff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      z-index: 10;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+    }
+
+    #dgx-3d-canvas {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+    #dgx-3d-canvas:active {
+      cursor: grabbing;
+    }
+
+    .card-caption-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(10, 14, 24, 0.95));
+      padding: 24px 20px 14px;
+      color: #ffffff;
+      font-size: 0.82rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    /* Three-Column Editorial Grid (Just like Fortune's Frontpage) */
+    .frontpage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 50px;
+      padding-bottom: 45px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    @media (max-width: 992px) {
+      .frontpage-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .story-card {
+      background: var(--bg-surface);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      border: 1px solid var(--border-light);
+    }
+    .story-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .story-card-media {
+      position: relative;
+      height: 220px;
+      background: #101626;
+      overflow: hidden;
+    }
+
+    .time-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(17, 24, 39, 0.85);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      z-index: 5;
+    }
+
+    .story-card-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .story-category-line {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--brand-red);
+      margin-bottom: 10px;
+    }
+
+    .story-headline {
+      font-family: var(--font-serif);
+      font-size: 1.32rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text-headline);
+      margin-bottom: 12px;
+    }
+
+    .story-summary {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .story-author-meta {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .story-author-meta strong {
+      color: #374151;
+    }
+
+    /* Program Highlights Quick-Bar */
+    .kpi-ticker-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 45px;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+    }
+    @media (max-width: 768px) {
+      .kpi-ticker-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .kpi-item {
+      border-right: 1px solid var(--border-light);
+      padding-right: 20px;
+    }
+    .kpi-item:last-child {
+      border-right: none;
+    }
+    .kpi-number {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--brand-red);
+      line-height: 1.1;
+    }
+    .kpi-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: #4b5563;
+      margin-top: 4px;
+    }
+
+    /* Curriculum Schedule Section (Starting 16th Oct 2026) */
+    .section-title-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 2px solid #111;
+      padding-bottom: 12px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-title-bar h2 {
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .date-badge-start {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: var(--brand-red);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Filter & Search Bar */
+    .filter-search-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .category-filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      padding: 6px 15px;
+      border-radius: 20px;
+      border: 1px solid var(--border-light);
+      background: #ffffff;
+      color: #4b5563;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-btn:hover, .cat-btn.active {
+      background: #111111;
+      color: #ffffff;
+      border-color: #111111;
+    }
+    .cat-btn.active-red {
+      background: var(--brand-red) !important;
+      color: #ffffff !important;
+      border-color: var(--brand-red) !important;
+    }
+
+    .search-box-input {
+      position: relative;
+      min-width: 300px;
+    }
+    .search-box-input input {
+      width: 100%;
+      padding: 9px 14px 9px 38px;
+      border-radius: 20px;
+      border: 1px solid var(--border-light);
+      font-size: 0.86rem;
+      outline: none;
+      background: #ffffff;
+    }
+    .search-box-input input:focus {
+      border-color: #111;
+    }
+    .search-box-input i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 0.85rem;
+    }
+
+    /* Table / Newspaper Row Design for 45 Sessions */
+    .editorial-table-container {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+
+    .editorial-row {
+      display: grid;
+      grid-template-columns: 85px 170px 1.8fr 2.2fr;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-light);
+      align-items: center;
+      gap: 20px;
+      transition: background 0.15s ease;
+      cursor: pointer;
+    }
+    .editorial-row:last-child {
+      border-bottom: none;
+    }
+    .editorial-row:hover {
+      background: #f8fafc;
+    }
+    @media (max-width: 1024px) {
+      .editorial-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    .editorial-row.is-assessment {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+    }
+    .editorial-row.is-final {
+      background: #ecfdf5;
+      border-left: 4px solid #10b981;
+    }
+
+    .session-badge-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      border-radius: 8px;
+      height: 52px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #4b5563;
+      font-weight: 700;
+    }
+    .session-badge-col .s-num {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #111;
+      line-height: 1.1;
+    }
+
+    .date-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .date-main {
+      font-weight: 700;
+      color: #111;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .date-day {
+      font-size: 0.76rem;
+      color: var(--brand-red);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .topic-col {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .topic-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.35;
+    }
+    .topic-subtopics {
+      font-size: 0.83rem;
+      color: #4b5563;
+      line-height: 1.45;
+    }
+
+    .outcome-col {
+      font-size: 0.84rem;
+      color: #555e6d;
+      border-left: 1px solid #e5e7eb;
+      padding-left: 16px;
+      line-height: 1.5;
+    }
+    .outcome-title {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #9ca3af;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .faculty-col {
+      text-align: right;
+      font-size: 0.82rem;
+    }
+    @media (max-width: 1024px) {
+      .faculty-col {
+        text-align: left;
+      }
+    }
+    .faculty-trainer {
+      font-weight: 700;
+      color: #111;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+    @media (max-width: 1024px) {
+      .faculty-trainer { justify-content: flex-start; }
+    }
+    .faculty-trainees {
+      color: #6b7280;
+      font-size: 0.76rem;
+      margin-top: 3px;
+    }
+
+    /* Modal / Pop-Up for Full Syllabus Story View */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-card {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 680px;
+      width: 100%;
+      padding: 36px;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+    }
+    .modal-close-x {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #4b5563;
+    }
+
+    /* Editorial Footer */
+    footer.editorial-footer {
+      background: #111111;
+      color: #9ca3af;
+      padding: 60px 4% 40px;
+      border-top: 4px solid var(--brand-red);
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #2d3748;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: #ffffff;
+      letter-spacing: 2.5px;
+      font-weight: 900;
+    }
+    .footer-notice {
+      color: #10b981;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Edition Bar -->
+  <div class="top-edition-bar">
+    <div class="edition-info">
+      <span><strong>PORTAL EDITION:</strong> AI RESEARCH &amp; TRAINING</span>
+      <span><strong>START DATE:</strong> 16th October 2026 (Friday)</span>
+      <span><strong>STATUS:</strong> ACTIVE HANDS-ON INCUBATOR</span>
+    </div>
+    <div style="font-family: var(--font-mono); font-size: 0.74rem;">
+      AI TRAINING • CONFIDENTIAL
+    </div>
+  </div>
+
+  <!-- Fortune-Style Masthead Navigation -->
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="masthead-left">
+        <button class="hamburger-btn" id="open-drawer-btn" aria-label="Open Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="#" class="brand-logo-text">
+          AI TRAINING
+          <span class="brand-tagline-small">Technology &amp; Beyond</span>
+        </a>
+      </div>
+
+      <div class="masthead-actions">
+        <button class="search-btn-trigger" id="focus-search-btn" title="Search Training Portal">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <a href="#curriculum-table" class="btn-red-pill">
+          Explore Syllabus
+        </a>
+        <a href="#assessments-target" class="btn-outline-pill">
+          6 Assessments
+        </a>
+      </div>
+    </div>
+
+    <!-- Category Sub-Bar -->
+    <nav class="subnav-bar">
+      <a href="#featured-lead" class="subnav-link active">Cover Story</a>
+      <a href="#curriculum-table" class="subnav-link" data-filter="all">Full Schedule (16 Oct Start)</a>
+      <a href="#curriculum-table" class="subnav-link" data-filter="infra">DGX &amp; Kubernetes (S1–7)</a>
+      <a href="#curriculum-table" class="subnav-link" data-filter="ml-cv">ML &amp; CNNs (S8–14)</a>
+      <a href="#curriculum-table" class="subnav-link" data-filter="project-1">Safety Project (S15–20)</a>
+      <a href="#curriculum-table" class="subnav-link" data-filter="genai-lane">Smart Lane &amp; GenAI (S21–25)</a>
+      <a href="#curriculum-table" class="subnav-link" data-filter="tumour">Tumour Delineation (S26–30)</a>
+      <a href="#curriculum-table" class="subnav-link" data-filter="advanced">Advanced CV, RL &amp; Qwen3-VL (S31–45)</a>
+    </nav>
+  </header>
+
+  <!-- Slide-Out Fortune Drawer Menu -->
+  <div class="drawer-overlay" id="drawer-overlay">
+    <aside class="side-drawer">
+      <div class="drawer-header">
+        <div class="drawer-brand">AI TRAINING</div>
+        <button class="drawer-close" id="close-drawer-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <ul class="drawer-menu-list">
+        <li class="drawer-item"><a href="#featured-lead" class="drawer-link">Home / Cover Story <i class="fa-solid fa-chevron-right arrow"></i></a></li>
+        <li class="drawer-item"><a href="#curriculum-table" class="drawer-link" data-filter="all">45-Session Master Schedule (Oct 16 – Dec 7) <i class="fa-solid fa-chevron-right arrow"></i></a></li>
+        <li class="drawer-item"><a href="#projects-grid" class="drawer-link">Industrial AI Projects (3 Capstones) <i class="fa-solid fa-chevron-right arrow"></i></a></li>
+        <li class="drawer-item"><a href="#infrastructure-section" class="drawer-link">DGX H200 Superpod Hardware <i class="fa-solid fa-chevron-right arrow"></i></a></li>
+        <li class="drawer-item"><a href="#curriculum-table" class="drawer-link" data-filter="assessment">6 Formal Assessments <i class="fa-solid fa-chevron-right arrow"></i></a></li>
+      </ul>
+
+      <div class="drawer-footer">
+        <strong>AI Training Research Team</strong><br>
+        Onboarding &amp; Hands-on Production Syllabus<br>
+        Revised Schedule Starting: 16th October 2026
+      </div>
+    </aside>
+  </div>
+
+  <!-- Editorial Main Body -->
+  <main class="editorial-wrapper">
+
+    <!-- KPI Metric Bar -->
+    <div class="kpi-ticker-bar">
+      <div class="kpi-item">
+        <div class="kpi-number">45</div>
+        <div class="kpi-label">Hands-On Sessions</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-number">16 OCT</div>
+        <div class="kpi-label">Commencement Date</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-number">07 DEC</div>
+        <div class="kpi-label">Final Capstone Defense</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-number">3 &amp; 6</div>
+        <div class="kpi-label">DGX Projects &amp; Assessments</div>
+      </div>
+    </div>
+
+    <!-- Featured Magazine Cover Story -->
+    <section class="hero-lead-section" id="featured-lead">
+      <div class="lead-story">
+        <div class="kicker-tag">
+          <i class="fa-solid fa-bolt"></i> COVER STORY • AI RESEARCH &amp; TRAINING ONBOARDING
+        </div>
+        <h1 class="main-headline">
+          Building the Next Wave of AI Engineers on Bare-Metal NVIDIA Supercomputing
+        </h1>
+        <p class="lead-dek">
+          AI Training launches its intensive 45-day incubator running from <strong>16th October to 7th December 2026</strong>. Trainees will master high-performance DGX cluster orchestration, YOLO fine-tuning on H200 GPUs, Vision Transformers for clinical diagnostics, and Qwen3-VL multimodal foundation models.
+        </p>
+        <div class="byline-row">
+          <span>By <strong>AI Research Advisory Board</strong></span>
+          <span>•</span>
+          <span>Curriculum: <strong>Hands-on AI Incubator</strong></span>
+          <span>•</span>
+          <span>Starts: <strong>Friday, Oct 16, 2026</strong></span>
+        </div>
+      </div>
+
+      <!-- 3D Interactive WebGL DGX Cluster Card -->
+      <div class="hero-visual-card">
+        <div class="card-top-tag">
+          <i class="fa-solid fa-cube"></i> LIVE 3D H200 ACCELERATOR MODEL
+        </div>
+        <canvas id="dgx-3d-canvas"></canvas>
+        <div class="card-caption-overlay">
+          <span><i class="fa-solid fa-arrows-spin"></i> Interactive 3D Model: Click &amp; drag to inspect server architecture</span>
+          <span style="font-family: var(--font-mono); font-size: 0.74rem;">NVIDIA H200 / DGX</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-Column Magazine Frontpage Project Stories -->
+    <div style="margin-bottom: 20px;">
+      <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: #111; margin-bottom: 4px;">Industrial Project Dispatches</h3>
+      <p style="color: #6b7280; font-size: 0.9rem;">Three enterprise AI products built and deployed directly to DGX infrastructure.</p>
+    </div>
+
+    <section class="frontpage-grid" id="projects-grid">
+      <!-- Story 1 -->
+      <article class="story-card">
+        <div class="story-card-media" id="canvas-card-1">
+          <span class="time-badge">Sessions 11–20</span>
+          <canvas id="p1-mini-canvas" style="width: 100%; height: 100%;"></canvas>
+        </div>
+        <div class="story-card-body">
+          <div class="story-category-line">Industrial Safety • Computer Vision</div>
+          <h2 class="story-headline">Intelligent Safety Compliance Assessment System</h2>
+          <p class="story-summary">
+            Autonomous PPE compliance monitoring integrating CNNs and custom-annotated YOLO models fine-tuned on NVIDIA H200 accelerators with real-time Gmail MIME security notifications.
+          </p>
+          <div class="story-author-meta">
+            <span>Format: <strong>Production DGX Lab</strong></span>
+            <span>28 Oct – 7 Nov 2026</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Story 2 -->
+      <article class="story-card">
+        <div class="story-card-media" id="canvas-card-2">
+          <span class="time-badge">Sessions 22–23</span>
+          <canvas id="p2-mini-canvas" style="width: 100%; height: 100%;"></canvas>
+        </div>
+        <div class="story-card-body">
+          <div class="story-category-line">Smart Cities • Edge OCR</div>
+          <h2 class="story-headline">Smart Lane Violation Detection &amp; Recognition</h2>
+          <p class="story-summary">
+            A real-time traffic intelligence pipeline combining deep object tracking across high-speed occlusions and Optical Character Recognition for license plate synthesis.
+          </p>
+          <div class="story-author-meta">
+            <span>Format: <strong>Production DGX Lab</strong></span>
+            <span>10 Nov – 11 Nov 2026</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Story 3 -->
+      <article class="story-card">
+        <div class="story-card-media" id="canvas-card-3">
+          <span class="time-badge">Sessions 26–30</span>
+          <canvas id="p3-mini-canvas" style="width: 100%; height: 100%;"></canvas>
+        </div>
+        <div class="story-card-body">
+          <div class="story-category-line">Healthcare • GenAI &amp; ViT</div>
+          <h2 class="story-headline">Automated Tumour Delineation &amp; Diagnostic LLM</h2>
+          <p class="story-summary">
+            Medical visual computing combining Vision Transformers, U-Net, and Dice/BCE combined loss balancing on DGX, connected to LLMs for automated clinical reporting.
+          </p>
+          <div class="story-author-meta">
+            <span>Format: <strong>Production DGX Lab</strong></span>
+            <span>14 Nov – 19 Nov 2026</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Master Curriculum Schedule (Revised Dates Starting Oct 16) -->
+    <section id="curriculum-table" style="margin-top: 40px;">
+      <div class="section-title-bar">
+        <div>
+          <h2>Comprehensive Day-by-Day Syllabus</h2>
+          <p style="color: #6b7280; font-size: 0.92rem; margin-top: 4px;">
+            Sequential 45-session hands-on curriculum spanning <strong>16th October to 7th December 2026</strong>.
+          </p>
+        </div>
+        <div class="date-badge-start">
+          <i class="fa-solid fa-calendar-check"></i> Date Sequence Starts 16th Oct 2026
+        </div>
+      </div>
+
+      <!-- Controls: Filters & Search -->
+      <div class="filter-search-row">
+        <div class="category-filter-pills">
+          <button class="cat-btn active" data-filter="all">All 45 Sessions</button>
+          <button class="cat-btn" data-filter="infra">Infra &amp; K8s (S1–7)</button>
+          <button class="cat-btn" data-filter="ml-cv">ML &amp; CNNs (S8–14)</button>
+          <button class="cat-btn" data-filter="project-1">Safety Capstone (S15–20)</button>
+          <button class="cat-btn" data-filter="genai-lane">Smart Lane &amp; GenAI (S21–25)</button>
+          <button class="cat-btn" data-filter="tumour">Tumour ViT (S26–30)</button>
+          <button class="cat-btn" data-filter="advanced">Advanced CV, RL &amp; Qwen (S31–45)</button>
+          <button class="cat-btn" data-filter="assessment" id="assessments-target" style="border-color: #f59e0b; color: #b45309;">
+            <i class="fa-solid fa-award"></i> 6 Assessments
+          </button>
+        </div>
+
+        <div class="search-box-input">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="schedule-search" placeholder="Search by topic, trainer, date, or keyword...">
+        </div>
+      </div>
+
+      <!-- Syllabus Rows Container -->
+      <div class="editorial-table-container" id="schedule-rows-wrapper">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Editorial Story Pop-up Modal -->
+  <div class="modal-overlay" id="session-modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-x" id="modal-close-x"><i class="fa-solid fa-xmark"></i></button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Editorial Footer -->
+  <footer class="editorial-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">AI TRAINING</div>
+        <p style="font-size: 0.88rem; margin-top: 6px; max-width: 450px;">
+          AI Research &amp; Training Team – Official Onboarding and Training Plan. Official Onboarding Syllabus for the AI Research Team.
+        </p>
+      </div>
+
+      <div>
+        <span class="footer-notice">
+          <i class="fa-solid fa-circle-check"></i> NOTE: 100% OF MODULES ARE HANDS-ON AND PRACTICAL IN NATURE
+        </span>
+        <div style="margin-top: 14px; font-size: 0.82rem; color: #9ca3af;">
+          Commencement: 16th October 2026 • Completion: 7th December 2026
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width: 1440px; margin: 24px auto 0; font-size: 0.75rem; color: #6b7280; display: flex; justify-content: space-between; flex-wrap: wrap;">
+      <span>&copy; 2026 AI Training - Technology &amp; Beyond. All Rights Reserved.</span>
+      <span>NVIDIA DGX H200 Superpod Architecture Series</span>
+    </div>
+  </footer>
+
+  <!-- Script for Dynamic Curriculum Data with 16th Oct Start & Fortune Design Logic -->
+  <script>
+    // -------------------------------------------------------------
+    // Calculate Correct Working Dates Starting 16th Oct 2026
+    // -------------------------------------------------------------
+    const revisedDates = [
+      "16 Oct 2026 (Friday)",    // 1
+      "17 Oct 2026 (Saturday)",  // 2
+      "19 Oct 2026 (Monday)",    // 3
+      "20 Oct 2026 (Tuesday)",   // 4
+      "21 Oct 2026 (Wednesday)", // 5
+      "22 Oct 2026 (Thursday)",  // 6
+      "23 Oct 2026 (Friday)",    // 7 (Assessment 1)
+      "24 Oct 2026 (Saturday)",  // 8
+      "26 Oct 2026 (Monday)",    // 9
+      "27 Oct 2026 (Tuesday)",   // 10
+      "28 Oct 2026 (Wednesday)", // 11
+      "29 Oct 2026 (Thursday)",  // 12
+      "30 Oct 2026 (Friday)",    // 13 (Assessment 2)
+      "31 Oct 2026 (Saturday)",  // 14
+      "02 Nov 2026 (Monday)",    // 15
+      "03 Nov 2026 (Tuesday)",   // 16
+      "04 Nov 2026 (Wednesday)", // 17
+      "05 Nov 2026 (Thursday)",  // 18 (Assessment 3)
+      "06 Nov 2026 (Friday)",    // 19
+      "07 Nov 2026 (Saturday)",  // 20
+      "09 Nov 2026 (Monday)",    // 21
+      "10 Nov 2026 (Tuesday)",   // 22
+      "11 Nov 2026 (Wednesday)", // 23
+      "12 Nov 2026 (Thursday)",  // 24
+      "13 Nov 2026 (Friday)",    // 25
+      "14 Nov 2026 (Saturday)",  // 26
+      "16 Nov 2026 (Monday)",    // 27
+      "17 Nov 2026 (Tuesday)",   // 28
+      "18 Nov 2026 (Wednesday)", // 29
+      "19 Nov 2026 (Thursday)",  // 30
+      "20 Nov 2026 (Friday)",    // 31 (Assessment 4)
+      "21 Nov 2026 (Saturday)",  // 32
+      "23 Nov 2026 (Monday)",    // 33
+      "24 Nov 2026 (Tuesday)",   // 34
+      "25 Nov 2026 (Wednesday)", // 35
+      "26 Nov 2026 (Thursday)",  // 36
+      "27 Nov 2026 (Friday)",    // 37
+      "28 Nov 2026 (Saturday)",  // 38
+      "30 Nov 2026 (Monday)",    // 39
+      "01 Dec 2026 (Tuesday)",   // 40 (Assessment 5)
+      "02 Dec 2026 (Wednesday)", // 41
+      "03 Dec 2026 (Thursday)",  // 42
+      "04 Dec 2026 (Friday)",    // 43
+      "05 Dec 2026 (Saturday)",  // 44
+      "07 Dec 2026 (Monday)"     // 45 (Assessment 6 - Final)
+    ];
+
+    const curriculumData = [
+      {
+        session: 1,
+        category: "infra",
+        topic: "AI Infrastructure Onboarding & Containerized Development Setup",
+        subtopics: ["1. Training Program Overview CPU vs GPU", "2. Significance of GPUs for DL training/inference", "3. NVIDIA DGX Architecture"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Learners can differentiate CPU and GPU computing, explain the role of GPUs in deep learning training and inference, and understand NVIDIA DGX architecture."
+      },
+      {
+        session: 2,
+        category: "infra",
+        topic: "AI Infrastructure Onboarding & Containerized Development Setup",
+        subtopics: ["1. Introduction to Working Environment", "2. Development Environment Setup & Prerequisites", "3. Best practices: GPU hygiene", "4. Containerization Fundamentals: Images, Containers"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopics 3, 4",
+        outcomes: "Learners can configure the development environment and prerequisites, apply best practices, and understand Docker containerization fundamentals, including images and containers, to package and run AI applications efficiently."
+      },
+      {
+        session: 3,
+        category: "infra",
+        topic: "Kubernetes for AI Workloads",
+        subtopics: ["1. Kubernetes Architecture", "2. Container Orchestration & Distributed Workloads"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding Kubernetes architecture, container orchestration, and distributed workload management, including automated deployment, scaling, and resource allocation."
+      },
+      {
+        session: 4,
+        category: "infra",
+        topic: "Kubernetes for AI Workloads (contd..)",
+        subtopics: ["1. Writing configuration file for Kubernetes", "2. K8s Objects: Pods, Services"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can write Kubernetes configuration files, understand core Kubernetes objects such as Pods and Services, and deploy and expose applications within a Kubernetes cluster."
+      },
+      {
+        session: 5,
+        category: "infra",
+        topic: "Kubernetes Workloads, Multi-Container Pods & Storage Management",
+        subtopics: ["1. Image Creation in Kubernetes", "2. Multi-Container Pods"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding image creation and usage in Kubernetes, along with deploying and managing multi-container Pods for applications requiring shared resources and coordinated execution."
+      },
+      {
+        session: 6,
+        category: "infra",
+        topic: "Kubernetes Workloads, Multi-Container Pods & Storage Management (contd..)",
+        subtopics: ["1. Kubernetes Volumes", "2. Volume Mounting", "3. Deployment Management"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Understanding Kubernetes volumes and volume mounting for persistent data storage, along with deployment creation, updates, scaling, and lifecycle management."
+      },
+      {
+        session: 7,
+        category: "assessment",
+        isAssessment: true,
+        topic: "Assessment 1 (Milestone 1)",
+        subtopics: ["Comprehensive evaluation based on learning (Sessions 1–6)"],
+        morning: "Hands-on Cluster Exam", afternoon: "Review & Architecture Defense",
+        outcomes: "Learners demonstrate end-to-end competency in configuring GPU hygiene, writing K8s manifests, and deploying multi-container pods with volume mounts."
+      },
+      {
+        session: 8,
+        category: "ml-cv",
+        topic: "AI, ML & Deep Learning Concepts",
+        subtopics: ["1. Data Handling & Visual Processing Pipeline", "2. Image as numerical data (pixels, channels)", "3. Data transformation and preprocessing", "4. Frame-based data (video as sequence) (Libraries: OpenCV, NumPy)"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopics 3, 4",
+        outcomes: "Understanding image and video data representation, pixel and channel-based processing, data transformation and preprocessing techniques, and frame-based visual processing using OpenCV and NumPy."
+      },
+      {
+        session: 9,
+        category: "ml-cv",
+        topic: "AI, ML & Deep Learning Concepts (contd...)",
+        subtopics: ["1. ML Pipeline (Input → Model → Prediction)", "2. Features and labels", "3. Model learning flow", "4. Prediction and evaluation (Library: scikit-learn)"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopics 3, 4",
+        outcomes: "Learners can convert images and videos into model-ready numerical representations, build a basic ML pipeline, distinguish features from labels, and evaluate model predictions using appropriate metrics."
+      },
+      {
+        session: 10,
+        category: "ml-cv",
+        topic: "Deep Learning Frameworks: PyTorch & TensorFlow",
+        subtopics: ["1. PyTorch fundamentals", "2. Basic Neural Network (Dense) – PyTorch", "3. TensorFlow fundamentals", "4. Basic Neural Network (Dense) – TensorFlow"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopics 3, 4",
+        outcomes: "Learners can create tensors, datasets, models, loss functions, and training loops and build a basic neural-network classifier using both PyTorch and TensorFlow."
+      },
+      {
+        session: 11,
+        category: "ml-cv",
+        topic: "PROJECT - Intelligent Safety Compliance Assessment",
+        subtopics: ["1. Project Overview & Project Architecture", "2. Object Detection Model"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can translate a real-world safety-monitoring requirement into an AI pipeline, select an appropriate detection approach, and develop the initial CNN-based solution for compliance assessment."
+      },
+      {
+        session: 12,
+        category: "ml-cv",
+        topic: "PROJECT - Intelligent Safety Compliance Assessment (contd..)",
+        subtopics: ["1. CNN Fundamentals Building", "2. Training, and Inference of a CNN", "3. Transfer Learning"],
+        morning: "Subtopic 1", afternoon: "Subtopics 2, 3",
+        outcomes: "Understanding CNN architecture and fundamentals, model training and inference workflows, and transfer learning techniques for adapting pretrained models to specific computer vision tasks."
+      },
+      {
+        session: 13,
+        category: "assessment",
+        isAssessment: true,
+        topic: "Assessment 2 (Milestone 2)",
+        subtopics: ["Comprehensive evaluation based on learning (Sessions 8–12)"],
+        morning: "Practical Deep Learning Exam", afternoon: "Model Evaluation & Code Review",
+        outcomes: "Learners demonstrate full proficiency building computer vision pipelines with OpenCV, training dense networks in PyTorch/TensorFlow, and implementing CNN transfer learning."
+      },
+      {
+        session: 14,
+        category: "ml-cv",
+        topic: "PROJECT - Intelligent Safety Compliance Assessment (contd..)",
+        subtopics: ["1. YOLO Model Algorithm", "2. YOLO Data Format"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can prepare YOLO-compatible datasets, understand the YOLO detection pipeline, interpret bounding-box predictions, and configure an object-detection model for a custom use case."
+      },
+      {
+        session: 15,
+        category: "project-1",
+        topic: "PROJECT - Intelligent Safety Compliance Assessment (contd..)",
+        subtopics: ["1. Importance of High-Quality Datasets", "2. Annotation Tools"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can design annotation guidelines, identify common dataset-quality issues, produce consistent annotations, and prepare datasets in formats suitable for deep-learning training."
+      },
+      {
+        session: 16,
+        category: "project-1",
+        topic: "PROJECT - Intelligent Safety Compliance Assessment (contd..)",
+        subtopics: ["1. Various annotation formats compatible with DL frameworks", "2. Best Practices in Dataset Preparation"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding annotation formats compatible with deep learning frameworks and applying best practices for dataset preparation, including data organization, labeling consistency, and train-validation-test splitting."
+      },
+      {
+        session: 17,
+        category: "project-1",
+        topic: "PROJECT - Intelligent Safety Compliance Assessment (contd..)",
+        subtopics: ["1. Fine tuning Model on custom dataset", "2. Fine tuning on custom dataset on H200 Infrastructure, Evaluation Metrics"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can fine-tune a YOLO model on a custom dataset using H200 GPUs, monitor training behaviour, interpret evaluation metrics, and identify opportunities for model optimization."
+      },
+      {
+        session: 18,
+        category: "assessment",
+        isAssessment: true,
+        topic: "Assessment 3 (Milestone 3)",
+        subtopics: ["Comprehensive evaluation based on learning (Sessions 14–17)"],
+        morning: "Custom YOLO Dataset & Training Challenge", afternoon: "Metrics & Inference Validation",
+        outcomes: "Demonstrated competence in dataset annotation formats, high-performance H200 GPU fine-tuning, and inference validation for PPE safety compliance."
+      },
+      {
+        session: 19,
+        category: "project-1",
+        topic: "PROJECT - Intelligent Safety Compliance Assessment (contd..)",
+        subtopics: ["1. Introduction to Gmail API", "2. MIME format for attachments (doc, images, PDFs)", "3. Security considerations when sending automated emails"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Learners can build an automated email workflow using Gmail API, generate MIME-based messages with file attachments, and implement authentication and basic security practices."
+      },
+      {
+        session: 20,
+        category: "project-1",
+        topic: "PROJECT - Intelligent Safety Compliance Assessment (contd..)",
+        subtopics: ["1. Main scripts (training, inference, notifications)", "2. Helper/utility modules", "3. Front-end files (HTML, JS, CSS)"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Understanding project structure and code organization, including training and inference scripts, notification mechanisms, reusable utility modules, and front-end development using HTML, JavaScript, and CSS."
+      },
+      {
+        session: 21,
+        category: "genai-lane",
+        topic: "Project Deployment on DGX Server",
+        subtopics: ["1. Docker File Architecture", "2. Project Image Creation", "3. Deployment on DGX Server"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Learners can create a Docker image for the project, configure the required runtime environment, and deploy the containerized application on DGX infrastructure."
+      },
+      {
+        session: 22,
+        category: "genai-lane",
+        topic: "PROJECT: Smart Lane Violation Detection and Recognition System",
+        subtopics: ["1. Project Overview", "2. Project Architecture", "3. Object Detection vs Object Tracking", "4. Optical Character Recognition"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopics 3, 4",
+        outcomes: "Learners can design a pipeline combining object detection, tracking, and OCR to identify vehicles, determine lane violations, and extract vehicle information from captured frames."
+      },
+      {
+        session: 23,
+        category: "genai-lane",
+        topic: "PROJECT: Smart Lane Violation Detection and Recognition System (contd..)",
+        subtopics: ["1. Main scripts", "2. Front-end files (HTML, JS, CSS)", "3. Helper/utility modules"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Learners can trace the execution flow of the deployed application, work with backend and frontend components, and prepare the project for execution in a DGX-based environment."
+      },
+      {
+        session: 24,
+        category: "genai-lane",
+        topic: "Generative AI & LLM Inference: Transformers, Hugging Face, and NVIDIA Microservices",
+        subtopics: ["1. Generative AI and Transformers Architecture", "2. Hugging Face Pipelines and Autoclasses"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding Generative AI concepts and Transformer architecture, along with using Hugging Face Pipelines and AutoClasses to load pretrained models and perform inference across different AI tasks."
+      },
+      {
+        session: 25,
+        category: "genai-lane",
+        topic: "Generative AI & LLM Inference: Transformers, Hugging Face, and NVIDIA Microservices (contd..)",
+        subtopics: ["1. Using pretrained LLMs via Hugging Face API (local vs hosted inference)", "2. Nvidia Inference Microservices (NIM)"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can load and run pretrained LLMs using Hugging Face, understand the transformer inference pipeline, compare local and API-based inference, and integrate NVIDIA inference services into an application."
+      },
+      {
+        session: 26,
+        category: "tumour",
+        topic: "PROJECT: Automated Tumour Delineation System",
+        subtopics: ["1. Project Overview, Architecture", "2. Object Segmentation, Annotation for Segmentation"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding the architecture of a tumour detection system, including image-based tumour identification, segmentation techniques, and annotation of medical images for accurate tumour localization and analysis."
+      },
+      {
+        session: 27,
+        category: "tumour",
+        topic: "PROJECT: Automated Tumour Delineation System (contd..)",
+        subtopics: ["1. Vision Transformers: U-Net Architectures", "2. LLM integration"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding Vision Transformer and U-Net architectures for tumour segmentation, along with LLM integration for generating automated medical reports and contextual insights."
+      },
+      {
+        session: 28,
+        category: "tumour",
+        topic: "PROJECT: Automated Tumour Delineation System (contd..)",
+        subtopics: ["1. Training setup on DGX: batch size, precision", "2. Loss functions for segmentation: Dice, BCE, combined loss"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can configure segmentation training on DGX GPUs, select and combine Dice/BCE losses appropriately, monitor training behaviour, and evaluate predictions using segmentation-specific metrics."
+      },
+      {
+        session: 29,
+        category: "tumour",
+        topic: "PROJECT: Automated Tumour Delineation System (contd..)",
+        subtopics: ["1. Integration of LLM with Model Inferences", "2. Front end development"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can integrate LLM capabilities with model inference, trace data flow between AI components, and understand how backend inference results are connected to the application frontend."
+      },
+      {
+        session: 30,
+        category: "tumour",
+        topic: "Project Deployment on DGX Server",
+        subtopics: ["1. Image Creation", "2. Deployment on DGX Server"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can package the complete AI application into a deployable image, configure its runtime requirements, and launch the application on DGX infrastructure."
+      },
+      {
+        session: 31,
+        category: "assessment",
+        isAssessment: true,
+        topic: "Assessment 4 (Milestone 4)",
+        subtopics: ["Comprehensive evaluation based on learning (Sessions 19–30)"],
+        morning: "GenAI & Medical Segmentation Lab", afternoon: "Technical Interview & DGX Run Review",
+        outcomes: "Demonstrated ability to configure LLM inferences, U-Net & Vision Transformer pipelines, Dice/BCE loss balancing, and live container deployment on DGX server."
+      },
+      {
+        session: 32,
+        category: "advanced",
+        topic: "Algorithms",
+        subtopics: ["1. DETR (DEtection TRansformer)", "2. LSTM", "3. ResNet50"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Learners can explain the architecture and working of DETR, LSTM, and ResNet50, identify suitable use cases, and select an appropriate architecture based on the problem requirement."
+      },
+      {
+        session: 33,
+        category: "advanced",
+        topic: "Computer Vision",
+        subtopics: ["1. U-Net", "2. Faster R-CNN"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding U-Net architecture for image segmentation and Faster R-CNN for object detection and localization, including their applications in computer vision tasks."
+      },
+      {
+        session: 34,
+        category: "advanced",
+        topic: "Computer Vision (contd..)",
+        subtopics: ["1. Anomaly Detection: Applications in manufacturing, cybersecurity, IoT, predictive maintenance; Supervised vs unsupervised", "2. Machine learning-based anomaly detection: Isolation Forest using scikit-learn"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding anomaly detection techniques to identify unusual patterns, deviations, and irregularities in data using AI and machine learning approaches."
+      },
+      {
+        session: 35,
+        category: "advanced",
+        topic: "Computer Vision (contd..)",
+        subtopics: ["1. Image Stitching", "2. Image Denoising", "3. Segmentation"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Applying image stitching techniques to combine multiple images, image denoising methods to reduce noise and improve image quality, and segmentation techniques to identify and isolate regions of interest for computer vision applications."
+      },
+      {
+        session: 36,
+        category: "advanced",
+        topic: "Data Engineering and Features",
+        subtopics: ["1. Data Sources & Data Acquisition", "2. Bias, Fairness & Data Ethics"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can acquire and assess data from relevant sources, identify potential bias and ethical concerns, and transform raw data into meaningful features for ML models."
+      },
+      {
+        session: 37,
+        category: "advanced",
+        topic: "Data Engineering and Features (contd..)",
+        subtopics: ["1. Advanced Feature Engineering: Feature Scaling and Normalization Strategies", "2. Image and Signal Feature Extraction Pipelines", "3. Text Feature Engineering"],
+        morning: "Subtopics 1, 2", afternoon: "Subtopic 3",
+        outcomes: "Applying advanced feature engineering techniques to extract, transform, and select meaningful features from raw data to improve model performance and predictive accuracy."
+      },
+      {
+        session: 38,
+        category: "advanced",
+        topic: "Reinforcement Learning (RL)",
+        subtopics: ["1. Fundamentals of RL (Agents, Environments, States, Actions, Rewards, Policies)", "2. Classic RL Algorithms (Q-Learning, SARSA, Deep Q-Networks DQN)"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can understand the RL framework, including agents, environments, states, actions, rewards, and policies, and implement classical algorithms such as Q-Learning and SARSA. They can also explore advanced approaches such as Deep Q-Networks (DQN) and apply RL concepts to decision-making problems."
+      },
+      {
+        session: 39,
+        category: "advanced",
+        topic: "Reinforcement Learning (RL) (contd..)",
+        subtopics: ["1. Proximal Policy Optimization (PPO)", "2. Soft Actor-Critic (SAC)"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding Proximal Policy Optimization (PPO) and Soft Actor-Critic (SAC) algorithms, including policy optimization, entropy-based exploration, and their application to continuous and complex decision-making tasks."
+      },
+      {
+        session: 40,
+        category: "assessment",
+        isAssessment: true,
+        topic: "Assessment 5 (Milestone 5)",
+        subtopics: ["Comprehensive evaluation based on learning (Sessions 32–39)"],
+        morning: "DETR, Feature Pipeline & RL Implementation", afternoon: "Algorithm Defense & Viva",
+        outcomes: "Verified mastery of modern detection transformers, anomaly isolation forests, data feature engineering, and continuous actor-critic reinforcement learning policies."
+      },
+      {
+        session: 41,
+        category: "advanced",
+        topic: "Natural Language Processing (NLP)",
+        subtopics: ["1. Introduction to NLP", "2. Classical NLP Techniques (Preprocessing, Tokenization, Stemming, Lemmatization, Feature Extraction)"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding Natural Language Processing fundamentals and classical NLP techniques, including text preprocessing, tokenization, stemming, lemmatization, and feature extraction for text analysis and classification."
+      },
+      {
+        session: 42,
+        category: "advanced",
+        topic: "Natural Language Processing (NLP) (contd..)",
+        subtopics: ["1. Transformers & Modern Architectures", "2. NLP Tasks & Applications (Classification, Sentiment, QA, Summarization, Generation)"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding Transformer-based architectures and modern NLP models, along with their applications in text classification, sentiment analysis, question answering, summarization, and text generation."
+      },
+      {
+        session: 43,
+        category: "advanced",
+        topic: "MultiModal Models",
+        subtopics: ["1. Vision Language Models (VLMs)", "2. Multimodal Transformers"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Learners can explain how vision and language information is jointly processed, work with multimodal transformer architectures, and design workflows combining image and text inputs."
+      },
+      {
+        session: 44,
+        category: "advanced",
+        topic: "MultiModal Models (contd..)",
+        subtopics: ["1. Educational Chat Pipeline", "2. Fine Tuning Qwen3-VL"],
+        morning: "Subtopic 1", afternoon: "Subtopic 2",
+        outcomes: "Understanding the educational chatbot pipeline, including data processing and response generation, along with fine-tuning Qwen3-VL for domain-specific multimodal understanding and educational applications."
+      },
+      {
+        session: 45,
+        category: "assessment",
+        isAssessment: true,
+        isFinal: true,
+        topic: "Assessment 6 (FINAL COMPREHENSIVE CAPSTONE ASSESSMENT)",
+        subtopics: ["Final Capstone Defense & Production DGX Readiness across the full 45-day incubator"],
+        morning: "End-to-End Capstone Deployment", afternoon: "Board Review, Certification & Graduation",
+        outcomes: "Formal sign-off validating trainees as autonomous AI Research Engineers equipped with containerized GPU supercomputing, Computer Vision, Generative AI, and Multimodal Transformer capabilities."
+      }
+    ];
+
+    // Combine revised date strings with curriculum objects
+    curriculumData.forEach((item, index) => {
+      const fullDateStr = revisedDates[index];
+      item.fullDate = fullDateStr;
+      item.dateMain = fullDateStr.split(" (")[0];
+      item.dayOfWeek = fullDateStr.split(" (")[1].replace(")", "");
+    });
+
+    // Render Editorial Rows
+    const scheduleContainer = document.getElementById("schedule-rows-wrapper");
+    const searchInput = document.getElementById("schedule-search");
+    const filterButtons = document.querySelectorAll(".cat-btn");
+    const drawerLinks = document.querySelectorAll(".drawer-link");
+    const subnavLinks = document.querySelectorAll(".subnav-link");
+
+    let currentFilter = "all";
+    let currentSearch = "";
+
+    function renderSchedule() {
+      scheduleContainer.innerHTML = "";
+
+      const filtered = curriculumData.filter(item => {
+        let matchFilter = true;
+        if (currentFilter === "infra") matchFilter = (item.session >= 1 && item.session <= 7 && !item.isAssessment);
+        else if (currentFilter === "ml-cv") matchFilter = (item.session >= 8 && item.session <= 14 && !item.isAssessment);
+        else if (currentFilter === "project-1") matchFilter = (item.session >= 15 && item.session <= 20 && !item.isAssessment);
+        else if (currentFilter === "genai-lane") matchFilter = (item.session >= 21 && item.session <= 25 && !item.isAssessment);
+        else if (currentFilter === "tumour") matchFilter = (item.session >= 26 && item.session <= 30 && !item.isAssessment);
+        else if (currentFilter === "advanced") matchFilter = (item.session >= 31 && item.session <= 45 && !item.isAssessment);
+        else if (currentFilter === "assessment") matchFilter = item.isAssessment;
+
+        let matchSearch = true;
+        if (currentSearch.trim() !== "") {
+          const q = currentSearch.toLowerCase();
+          matchSearch = item.topic.toLowerCase().includes(q) ||
+                        item.subtopics.some(s => s.toLowerCase().includes(q)) ||
+                        item.outcomes.toLowerCase().includes(q) ||
+                        
+                        item.fullDate.toLowerCase().includes(q);
+        }
+
+        return matchFilter && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        scheduleContainer.innerHTML = `
+          <div style="padding: 50px; text-align: center; color: #6b7280; font-family: var(--font-serif); font-size: 1.1rem;">
+            No sessions match your search criteria. Please adjust your filter or keywords.
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const row = document.createElement("div");
+        row.className = `editorial-row ${item.isAssessment ? 'is-assessment' : ''} ${item.isFinal ? 'is-final' : ''}`;
+
+        const subtopicsHTML = item.subtopics.map(s => `<div>• ${s}</div>`).join("");
+
+        row.innerHTML = `
+          <div class="session-badge-col">
+            <span style="font-size: 0.62rem; text-transform: uppercase;">${item.isFinal ? 'CAPSTONE' : item.isAssessment ? 'MILESTONE' : 'SESSION'}</span>
+            <span class="s-num">${item.session}</span>
+          </div>
+
+          <div class="date-col">
+            <span class="date-main"><i class="fa-regular fa-calendar" style="color: var(--brand-red); font-size: 0.8rem;"></i> ${item.dateMain}</span>
+            <span class="date-day">${item.dayOfWeek}</span>
+          </div>
+
+          <div class="topic-col">
+            <div class="topic-title">${item.topic}</div>
+            <div class="topic-subtopics">${subtopicsHTML}</div>
+          </div>
+
+          <div class="outcome-col">
+            <div class="outcome-title">Outcome &amp; Competency</div>
+            <div>${item.outcomes}</div>
+          </div>
+        `;
+
+        row.addEventListener("click", () => openDetailModal(item));
+        scheduleContainer.appendChild(row);
+      });
+    }
+
+    // Modal Display Logic
+    const modalOverlay = document.getElementById("session-modal-overlay");
+    const modalBody = document.getElementById("modal-body");
+    const modalCloseX = document.getElementById("modal-close-x");
+
+    function openDetailModal(item) {
+      modalBody.innerHTML = `
+        <div style="font-family: var(--font-sans); font-size: 0.78rem; text-transform: uppercase; color: var(--brand-red); font-weight: 800; letter-spacing: 1.5px; margin-bottom: 8px;">
+          ${item.isFinal ? '★ FINAL GRADUATION DEFENSE' : item.isAssessment ? 'MILESTONE ASSESSMENT' : 'COURSEWORK DISPATCH'} • SESSION ${item.session}
+        </div>
+        <h2 style="font-family: var(--font-serif); font-size: 1.7rem; color: #111; line-height: 1.25; margin-bottom: 12px;">
+          ${item.topic}
+        </h2>
+        <div style="display: flex; gap: 16px; font-size: 0.85rem; color: #6b7280; padding-bottom: 16px; border-bottom: 1px solid var(--border-light); margin-bottom: 20px;">
+          <span><i class="fa-solid fa-calendar-day" style="color: var(--brand-red);"></i> <strong>${item.fullDate}</strong></span>
+          <span>•</span>
+          <span>Format: <strong>Full Day Practical</strong></span>
+          <span>•</span>
+          <span>Environment: <strong>NVIDIA DGX Cluster</strong></span>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 18px 22px; border-radius: 8px; margin-bottom: 20px;">
+          <h4 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; color: #374151; font-weight: 800; margin-bottom: 10px;">
+            <i class="fa-solid fa-list-check" style="color: var(--brand-red);"></i> Core Syllabus Topics
+          </h4>
+          <div style="font-size: 0.9rem; line-height: 1.6; color: #1f2937;">
+            ${item.subtopics.map(s => `<div style="margin-bottom: 6px;">• ${s}</div>`).join("")}
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <h4 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; color: #374151; font-weight: 800; margin-bottom: 8px;">
+            Target Learning Outcome
+          </h4>
+          <p style="font-size: 0.92rem; color: #4b5563; line-height: 1.6;">
+            ${item.outcomes}
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; border-top: 1px solid var(--border-light); padding-top: 16px; font-size: 0.82rem; font-family: var(--font-mono);">
+          <div style="background: #fff; border: 1px solid #e5e7eb; padding: 10px 14px; border-radius: 6px;">
+            <span style="color: #6b7280; display: block; font-size: 0.72rem;">MORNING SESSION</span>
+            <strong>${item.morning}</strong>
+          </div>
+          <div style="background: #fff; border: 1px solid #e5e7eb; padding: 10px 14px; border-radius: 6px;">
+            <span style="color: #6b7280; display: block; font-size: 0.72rem;">AFTERNOON SESSION</span>
+            <strong>${item.afternoon}</strong>
+          </div>
+        </div>
+      `;
+      modalOverlay.classList.add("active");
+    }
+
+    modalCloseX.addEventListener("click", () => modalOverlay.classList.remove("active"));
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) modalOverlay.classList.remove("active");
+    });
+
+    // Filter Button Clicks
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.getAttribute("data-filter");
+        renderSchedule();
+      });
+    });
+
+    // Search Input Typing
+    searchInput.addEventListener("input", (e) => {
+      currentSearch = e.target.value;
+      renderSchedule();
+    });
+
+    // Drawer Slide-out Handlers
+    const drawerOverlay = document.getElementById("drawer-overlay");
+    const openDrawerBtn = document.getElementById("open-drawer-btn");
+    const closeDrawerBtn = document.getElementById("close-drawer-btn");
+
+    openDrawerBtn.addEventListener("click", () => drawerOverlay.classList.add("open"));
+    closeDrawerBtn.addEventListener("click", () => drawerOverlay.classList.remove("open"));
+    drawerOverlay.addEventListener("click", (e) => {
+      if (e.target === drawerOverlay) drawerOverlay.classList.remove("open");
+    });
+
+    drawerLinks.forEach(link => {
+      link.addEventListener("click", (e) => {
+        const filterVal = link.getAttribute("data-filter");
+        if (filterVal) {
+          currentFilter = filterVal;
+          filterButtons.forEach(b => {
+            if (b.getAttribute("data-filter") === filterVal) b.classList.add("active");
+            else b.classList.remove("active");
+          });
+          renderSchedule();
+        }
+        drawerOverlay.classList.remove("open");
+      });
+    });
+
+    subnavLinks.forEach(link => {
+      link.addEventListener("click", (e) => {
+        const filterVal = link.getAttribute("data-filter");
+        if (filterVal) {
+          currentFilter = filterVal;
+          filterButtons.forEach(b => {
+            if (b.getAttribute("data-filter") === filterVal) b.classList.add("active");
+            else b.classList.remove("active");
+          });
+          renderSchedule();
+        }
+        subnavLinks.forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+      });
+    });
+
+    // Initial table render
+    renderSchedule();
+
+    // -------------------------------------------------------------
+    // Three.js 3D Interactive Graphics
+    // -------------------------------------------------------------
+
+    // 1. Hero 3D NVIDIA DGX H200 Superpod
+    (function initHero3D() {
+      const canvas = document.getElementById("dgx-3d-canvas");
+      const parent = canvas.parentElement;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, parent.clientWidth / parent.clientHeight, 0.1, 100);
+      camera.position.set(0, 3.5, 8.5);
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(parent.clientWidth, parent.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Lights
+      const ambLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambLight);
+      const dirLight = new THREE.DirectionalLight(0x00f0ff, 1.8);
+      dirLight.position.set(5, 10, 7);
+      scene.add(dirLight);
+
+      const pointLight = new THREE.PointLight(0x8b0000, 2.5, 20);
+      pointLight.position.set(-4, -2, -3);
+      scene.add(pointLight);
+
+      const clusterGroup = new THREE.Group();
+
+      // Main Server Chassis (Dark Obsidian with Crimson/Cyan Trims)
+      const chassisGeo = new THREE.BoxGeometry(4.2, 1.3, 3.0);
+      const chassisMat = new THREE.MeshStandardMaterial({
+        color: 0x111827,
+        metalness: 0.9,
+        roughness: 0.2
+      });
+      const chassis = new THREE.Mesh(chassisGeo, chassisMat);
+      clusterGroup.add(chassis);
+
+      // Chassis Cyber Outline Wireframe
+      const edges = new THREE.EdgesGeometry(chassisGeo);
+      const edgeLine = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x00f0ff, linewidth: 2 }));
+      clusterGroup.add(edgeLine);
+
+      // 8 H200 GPU Modules
+      const gpuGeo = new THREE.BoxGeometry(0.38, 0.42, 1.7);
+      const gpuMat = new THREE.MeshStandardMaterial({
+        color: 0x1f2937,
+        emissive: 0x8b0000,
+        emissiveIntensity: 0.4,
+        metalness: 0.95
+      });
+
+      for (let i = 0; i < 8; i++) {
+        const gpu = new THREE.Mesh(gpuGeo, gpuMat);
+        gpu.position.set(-1.6 + i * 0.46, 0.75, 0);
+        clusterGroup.add(gpu);
+      }
+
+      // Dynamic Orbital Fiber Rings
+      const torusGeo = new THREE.TorusGeometry(3.2, 0.035, 16, 100);
+      const torusMat1 = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.6 });
+      const torus1 = new THREE.Mesh(torusGeo, torusMat1);
+      torus1.rotation.x = Math.PI / 3;
+      clusterGroup.add(torus1);
+
+      const torusMat2 = new THREE.MeshBasicMaterial({ color: 0x8b0000, transparent: true, opacity: 0.5 });
+      const torus2 = new THREE.Mesh(torusGeo, torusMat2);
+      torus2.rotation.x = -Math.PI / 3;
+      clusterGroup.add(torus2);
+
+      scene.add(clusterGroup);
+
+      // Interaction Variables
+      let isDragging = false;
+      let prevMousePos = { x: 0, y: 0 };
+
+      canvas.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        prevMousePos = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener("mouseup", () => isDragging = false);
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - prevMousePos.x;
+        const deltaY = e.clientY - prevMousePos.y;
+        clusterGroup.rotation.y += deltaX * 0.008;
+        clusterGroup.rotation.x += deltaY * 0.008;
+        prevMousePos = { x: e.clientX, y: e.clientY };
+      });
+
+      function renderLoop() {
+        requestAnimationFrame(renderLoop);
+        if (!isDragging) {
+          clusterGroup.rotation.y += 0.004;
+        }
+        torus1.rotation.z += 0.008;
+        torus2.rotation.z -= 0.008;
+        renderer.render(scene, camera);
+      }
+      renderLoop();
+
+      window.addEventListener("resize", () => {
+        camera.aspect = parent.clientWidth / parent.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(parent.clientWidth, parent.clientHeight);
+      });
+    })();
+
+    // 2. Mini Three.js Canvases for Projects
+    function initMini3D(canvasId, type, colorHex) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const parent = canvas.parentElement;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, parent.clientWidth / parent.clientHeight, 0.1, 100);
+      camera.position.z = 4.2;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(parent.clientWidth, parent.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      let mesh;
+      if (type === "safety") {
+        const geom = new THREE.BoxGeometry(1.6, 2.0, 1.2);
+        const edges = new THREE.EdgesGeometry(geom);
+        mesh = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: colorHex, linewidth: 2 }));
+        const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.5, 1), new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true }));
+        mesh.add(core);
+      } else if (type === "lane") {
+        mesh = new THREE.Mesh(new THREE.TorusKnotGeometry(0.8, 0.22, 64, 8, 2, 3), new THREE.MeshBasicMaterial({ color: colorHex, wireframe: true }));
+      } else if (type === "medical") {
+        mesh = new THREE.Mesh(new THREE.SphereGeometry(1.1, 22, 22), new THREE.MeshBasicMaterial({ color: colorHex, wireframe: true }));
+      }
+
+      scene.add(mesh);
+
+      function loop() {
+        requestAnimationFrame(loop);
+        mesh.rotation.x += 0.01;
+        mesh.rotation.y += 0.012;
+        renderer.render(scene, camera);
+      }
+      loop();
+
+      window.addEventListener("resize", () => {
+        camera.aspect = parent.clientWidth / parent.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(parent.clientWidth, parent.clientHeight);
+      });
+    }
+
+    initMini3D("p1-mini-canvas", "safety", 0x00f0ff);
+    initMini3D("p2-mini-canvas", "lane", 0xef4444);
+    initMini3D("p3-mini-canvas", "medical", 0x10b981);
+  </script>
+</body>
+</html>
